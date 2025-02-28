@@ -1,30 +1,24 @@
 package org.example;
-import org.example.Student.Student;
-import org.example.Student.Teacher;
 
+import org.example.people.Student;
 import java.util.Scanner;
 
-import static org.example.Utils.DataUtils.*;
-import static org.example.Utils.FileUtils.readFile;
-import static org.example.Utils.MenuUtils.printMainMenu;
-import static org.example.Utils.TeacherUtils.readTeachersFile;
+import static org.example.utils.FileUtils.readStudentsFile;
+import static org.example.utils.MenuUtils.doMenu;
+import static org.example.utils.MenuUtils.printMainMenu;
+import static org.example.utils.RecordUtils.createRecord;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Student[] students = new Student[500];
-        readFile(students, scanner);
+        readStudentsFile(students, scanner);
         if (students[0] == null){
             System.out.println("В базе нет ни одной записи. Пожалуйста добавьте новую.");
-            createRecord(scanner, students);
+            createRecord(students, scanner);
         }
         printMainMenu();
-        int choice = 0;
-        while(choice != 11){
-            System.out.print("Выберите действие: ");
-            choice = scanner.nextInt();
-            doChoice(choice, scanner, students);
-        }
+        doMenu(students, scanner);
         scanner.close();
     }
 }
